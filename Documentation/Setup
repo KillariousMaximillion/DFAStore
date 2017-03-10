@@ -1,0 +1,37 @@
+Environments
+------------
+OS: Raspbian (Jessie)
+
+WebServer: Apache 2.4
+  - using fcgid-script .fcgi
+
+Languages: Python 3.4
+
+Framwork: Flask (MVC)
+  pip packages installed:
+    Flask==0.12
+    Flask-Login==0.4.0
+    Flask-Mail==0.9.1
+    Flask-SQLAlchemy==2.2
+    Flask-WTF==0.14.2
+    Flask-WhooshAlchemy==0.56
+    Jinja2==2.9.5
+    MarkupSafe==1.0
+    SQLAlchemy==1.1.6
+    Tempita==0.5.2
+    WTForms==2.1
+    Werkzeug==0.11.15
+    Whoosh==2.7.4
+    blinker==1.4
+    click==6.7
+    coverage==4.3.4
+    decorator==4.0.11
+    flipflop==1.0
+    itsdangerous==0.24
+    pbr==2.0.0
+    six==1.10.0
+    sqlalchemy-migrate==0.11.0
+    sqlparse==0.2.3
+
+Database: PostgreSQL
+
