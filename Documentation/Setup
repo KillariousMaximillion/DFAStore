@@ -1,5 +1,5 @@
 Environments
-------------
+##################################################
 OS: Raspbian (Jessie)
 
 WebServer: Apache 2.4
@@ -34,4 +34,159 @@ Framwork: Flask (MVC)
     sqlparse==0.2.3
 
 Database: PostgreSQL
+
+####################################################
+OS: Windows
+
+Webserver: Python Virtual Environment host service
+
+Languages: Python 3.4
+
+Framwork: Flask (MVC)
+  pip packages installed:
+    Flask==0.12
+    Flask-Login==0.4.0
+    Flask-Mail==0.9.1
+    Flask-SQLAlchemy==2.2
+    Flask-WTF==0.14.2
+    Flask-WhooshAlchemy==0.56
+    Jinja2==2.9.5
+    MarkupSafe==1.0
+    SQLAlchemy==1.1.6
+    Tempita==0.5.2
+    WTForms==2.1
+    Werkzeug==0.11.15
+    Whoosh==2.7.4
+    blinker==1.4
+    click==6.7
+    coverage==4.3.4
+    decorator==4.0.11
+    flipflop==1.0
+    itsdangerous==0.24
+    pbr==2.0.0
+    six==1.10.0
+    sqlalchemy-migrate==0.11.0
+    sqlparse==0.2.3
+
+Database: PostgreSQL
+
+###
+Setup Instructions:
+- Download Python 3.4 or latest version from https://www.python.org/
+- Install Python
+	- Do Customized Installation
+	- On next screen Select all Optional features
+	- On next scree enable Install for all users, Associate files with Python, Create Shortcuts for installed applications, Add Python to environment variables, Precompile standard library
+	- Customize install path Default is C:\Program Files\Python36 for Python 3.6 ( I will use this, any paths required later you will have to alter to your installation path )
+	- Install
+	- If you wish you can disable max path length limit to windows so there are no more issues with max path length being exceeded.  ( I did this as it is annoying when it causes issues )
+	
+- Download PostgreSQL Server 9.6.2 for Version of windows you use from https://www.enterprisedb.com/downloads/postgres-postgresql-downloads#windows
+- Install PostgreSQL Server 9.6.2
+	- Choose installation directory, default is good location for the application
+	- On next screen Choose data directory, you can use the default location just take note where it is located I usually put my databases in a development directory path example "C:\Development\PostgreSQL\data"
+	- On next screen Set the password for the postgres(default) user, can be anything you like, this is the database administrator login
+	- On next screen Set the port you wish to run PostgreSQL, default is good usually
+	- On next screen Set the Locale, I am use default setting.
+	- Continue with installation.
+	- After installation the StackBuilder does not need to be run, you can if you wish to look at what else you can get to extend PostgreSQL Server
+
+- Download Git 2.12.0-64 from https://git-scm.com/
+- Install Git
+	- Keep the default selected components and hit next
+	- Select Use Git from Windows Command Prompt hit next
+	- Use (Tortoise) Plink "do not change the path" hit next
+	- Select Checkout Windows-style, commit Unix-style line endings hit next
+	- Select Use MinTTY (the default terminal of MSYS2) hit next
+	- Keep all configuring extra option hit Install
+
+- Download TortoiseGit 2.4.0.2 from https://tortoisegit.org/download/
+- Install TortoiseGit
+	- Keep all default settings and Install
+
+Optional:
+If you wish for a decent graphical tool to view PostgreSQL databases you can download pgAdmin Tool
+- Download pgAdmin 4 v1.3 from https://www.pgadmin.org/download/windows4.php
+- Install pgAdmin 4 v1.3
+
+This would be good time to reboot Windows to keep it sane after so many program installations.
+
+Next step is to get access to github to help contribute to the project.
+
+Before we can use github we need to generate our SSH public and private keys used for transmission of data to and from github
+
+- run Start->Git Bash
+	- type -> ssh-keygen -t rsa -b 4096 -C "your_email@example.com" (replace your_email@example.com with your email used for git hub registration)
+	- when it asks to save file keep the default .ssh/id_rsa, just press enter
+	- when it asks to enter passphrase leave blank, just press enter
+	- when it asks to reenter passphrase leave blank, just press enter
+	
+	Note: you can name the file anything you want just do not add a .extension to it.  It with create a flatfile (your private key) and a .pub file (your public key)
+	Note: you can also add a passphrase but if you do you will have to type this in constantly when checking in and out items from github
+	
+Now that we have our ssh keys we need to generate an OpenSSH key for TortoiseGit
+
+- run Start->puttygen
+	- Conversion->Import Key
+	- select the .ssh/id_rsa file or whatever you named it if you did not accept the default name above.
+	- Select the Save private key button
+	- type in id_rsa.ppk or whatever you base name is .ppk and save to the .ssh directory, note: you will have to add the .ppk extention to the filename it will not automatically do this for you
+
+You are now ready for Github access
+
+- Create a github account at https://github.com if you don't already have one
+- Login to your account
+	- goto user settings, top right user icon select settings
+	- open SSH and PGP Keys page
+	- select New SSH Key
+	- open id_rsa.pub or whatever name your .pub is called from above generation
+	- copy all the contents to the large area asking for the public key
+	- give the key a name, I used "git" for my unix key, and "wingit" for my windows key
+	
+You can now check in and out data to github via command line, however we installed TortoiseGit to make our life a bit easier so little more work to do.
+
+- Setting up TortoiseGit for github repository access
+	- create a working path on your computer, I used "C:\Development\Github\DFA"
+		- this is where all work will be done for this repository
+	- browse into that directory and right click on the background in the blank file area.
+	- select "Git Create Repository here ..."
+	- a popup will happen, make sure the Make it Bare is unchecked (this is used if you want to start creating a new project locally and then push it to the repository)
+	- hit ok
+	- this will create a .git folder this is where all of gits revision history is logged
+	- next we attach this folder to github
+		- right click blank background again and to TortoiseGit->Settings
+		- bypass any popups
+		- goto Git section of Heiarchy Tree
+			- enter in a value for Name and email, enter in the same email you use for github
+		- Next under Git select Remote
+			- goto the git repository on github you want to access for this project https://github.com/KillariousMaximillion/DFAStore
+			- select the Clone or download button
+			- copy the info in the clipboard area
+			- go back to TortoiseGit settings window
+			- past the value into URL and PushURL
+			- Use the putty Key select tool to choose the ir_rsa.ppk file that was generated or whatever you named it .ppk
+			- press Apply or OK, Apply you will notice a Remote created called origin, this is the base of your base branch and will be referred to whenever you look at the lowest master level
+		- Next right click again on the blank background
+		- select TortoiseGit->Fetch, this will grab the entire heirarchial tree so you can see all branches locally via the TortoiseGit tool
+		- Next right click again on the blank background
+		- select TortoiseGit->Pull, this will pull all the data for the origin or master branch
+	
+Now this is where work can be started, where you make your own branches from development heirarchy, do checkin and out of code and files, request pull actions for code review etc.
+*** Need help filling this in here for instructions ***
+*** Will be a work in progress as we experience how things workout ***
+
+Setting up Python virtual Environment
+- open up command prompt by Start->Command Prompt, do not run this as administrator, it will protect you later
+- Test to ensure python works by typing -> python --version
+- should return the version of python, this means python pathing is correct for development
+- change to your development directory, the place where you put all the code you grabbed with TortoiseGit
+		Note: a good tutorial to read through to get flask and python setup is https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
+- type -> python -m venv flask -> this will create a python virtual environment, this allows you to work in a virtual space outside of the systems python environment so you don't dirty up your systems installation of python
+- type -> flask\Scripts\activate.bat -> this will set the shell to the flask virtual environment, without entering the virtual shell it will try to apply all changes to the system which requires administrator access
+- type -> pip install -r requirements.txt -> this will install all packages the project uses
+
+*** this is as far as development has gotten on this project on windows side, the unix side only has the web server service running so it is just a run.py change needed to get a windows python web server service running https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world has an example and will be added later ***
+
+
+	
 
