@@ -289,3 +289,23 @@ Using Command Line and other Editors for development
 - debugging is set to true so any errors as the interpreter runs into them will be dumped to the command prompt.  You may want to set the command prompt window size for easier reading of the messages.
 - Thats it your now ready to work on the project using your own text editor and just the command prompt
 
+###
+Using TortoiseGit
+
+# Adding files to a Github Repository
+- Browse to the project folder and for any new files
+	- Right click on file or group select files and right click on selection
+	- Select TortoiseGit->Add to add the item to the commit queue
+	- A popup will show selection of files, review the files to ensure they are the ones you wish to be added to Github
+	- A popup will show a review of the actions, verify the actions and Commit the new files to the project.
+	- Please add a small description for the action, example: "Added winrun.py for windows development support" or "Added stuff.py which allows user to perform this task."  try to make the comment as short as possible but feel free to enough to let anyone looking at the commit they know why it was commited.
+	- If there were any changes to other files they will also show as modified for the commit, if you do not wish to commit those changes at this time unselect them else you can commit the changes.
+	- The files are not available on Github yet though, they are just added to the project commit profile. 
+	- To make the files available on Github you willhave to Push then to Github, by pressing the Push action button setting, notice you can do a few actions for that button Push is the one we want.
+	- Before the push to Github is done there are extra info actions that can be applied, usually these changes are only needed when fixing a missmatched Github and your local files.
+	- We can usually just hit "OK" button here
+	- An output window will popup showing the actions taken by TortoiseGit.
+		- thing to note here the first line is the actual command line TortoiseGit runs, you can use this info to better understand and play with the GitBash commands on your own.
+			- TortoiseGit just runs and captures displays.
+			- Also there are other actions required to manuall add files to the projects git profile (committing) etc if you wish to play with command line git please reference this website https://www.atlassian.com/git/tutorials/learn-git-with-bitbucket-cloud  this tutorial has about everything needed to work command line git with Github.
+			- As stated earlier I will be useing TortoiseGit for all my Github actions in this document, it is simple easy GUI and makes long processes via many commands simple.
