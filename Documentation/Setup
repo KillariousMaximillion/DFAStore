@@ -109,6 +109,62 @@ If you wish for a decent graphical tool to view PostgreSQL databases you can dow
 - Download pgAdmin 4 v1.3 from https://www.pgadmin.org/download/windows4.php
 - Install pgAdmin 4 v1.3
 
+Optional
+If you wish to use a decent development studio for python, java/javascript, and web development I recomment Eclipse
+- Download Eclipse Neon from https://www.eclipse.org/downloads/ , this is the one required to use the latest PyDev plugin
+- Install Eclipse IDE for Java Developers
+	- You can install the IDE to a custom directory, I don't like my home directory messed up so I used C:\Development\eclipse\java-neon
+		Note: eclipse is not a standard installation it places all its installation files into the install directory, to remove you just need to remove the installation directory,
+				- it also creates a .eclipse and a .p2 file in your home directory you can remove on installation as well
+- Next we add the PyDev Addin for Python development support
+	- Launch the application
+	- Set your workspace, this is where any eclipse setting are stored as well is the default development location for new projects,  I used C:\Development\eclipse\workspace-neon, I added a -neon to the workspace as each version of eclipse would need a new workspace if you use multiple versions of eclipse
+	- From top Menu select Help->Eclipse Marketplace
+	- type in "PyDev" in Find Box and hit "Go" button
+	- Click install button for "PyDev - Python IDE for Eclipse 5.5.0"
+	- keep all selected options and click "Confirm" button
+	- Select to install "Brainwry Software; PyDev; Brainwry" and press "OK" button
+	- The Eclipse program will need to restart
+	- Setting up layout perspectives and runtime associations
+		- From top Menu select Window->Perspective->Open Perspective->Other
+		- Select PyDev and press "OK" button, this adds a new view perspective to the perspective group for easy switching to IDE perspectives based on files displayed.
+		- From top menu select Window->Preferences
+		- In Heirarchy window goto PyDev->Interpreters->Python Interpreter
+		- In top Right click "New" button
+		- Enter in a name for your python interpreter, I choose Python36 to identify with my Python v3.6 installation
+		- Use "Browse" button to set the path to your python.exe path, my was at C:\Program Files\Python36\python.exe
+		- Press "OK" button
+		- A screen will pop up[ for you to select system path associations, I ensured all associations were done and Press "OK" button
+		- Now press "OK" button on the Preferences window.
+		- If you get a firewall permissions window you will have to allow for access through the firewall so the PyDev application can perform routine updates
+- Next we will add Javascript development support
+	- From the top Menu select Help->Install New Software
+	- In the "Work with:" section select "Neon - http://download.eclipse.org/releases/neon"
+	- This will populate the next section with a bunch of packages that can be installed and used
+	- Under "Programming Languages" select "JavaScript Development Tools" and "JavaScript Development Tools Chromium/V8 Remote Debugger"
+	- At bottom of window press "Next" button
+	- The next screen will list what will be installed press "Next" button again
+	- The Eclipse program will need to restart
+	- Setting up layout perspectives
+		- From top Menu select Window->Perspective->Open Perspective->Other
+		- Select Javascript and press "OK" button, this adds a new view perspective to the perspective group for easy switching to IDE perspectives based on files displayed.
+- Next we will add Java Web, Web and XSL Development tool support
+	- From the top Menu select Help->Install New Software
+	- In the "Work with:" section select "Neon - http://download.eclipse.org/releases/neon"
+	- This will populate the next section with a bunch of packages that can be installed and used
+	- Under "Web, XML, Java EE, and OSGi Enterprise Development" select "Eclipse Java Web Development Tools", "Eclipse Web Development Tools", and "Eclipse XSL Development Tools", he won't nessessarily use all these tools with this application but the tools are there if we choose to later on.
+	- At bottom of window press "Next" button
+	- The next screen will list what will be installed press "Next" button again
+	- The Eclipse program will need to restart
+	- Setting up layout perspectives
+		- From top Menu select Window->Perspective->Open Perspective->Other
+		- Select Web and press "OK" button, this adds a new view perspective to the perspective group for easy switching to IDE perspectives based on files displayed.
+		- From top Menu select Window->Perspective->Open Perspective->Other
+		- Select XML and press "OK" button, this adds a new view perspective to the perspective group for easy switching to IDE perspectives based on files displayed.
+		
+	NOTE: There are alot of tools Eclipse has support for, You can even set it up to interface with Github directly, I am using TortoiseGit as it is a bit more visible of what it doing and I will leave the rest or Eclipse to you for exploring and setting up.
+		
+		
 This would be good time to reboot Windows to keep it sane after so many program installations.
 
 Next step is to get access to github to help contribute to the project.
@@ -187,6 +243,49 @@ Setting up Python virtual Environment
 
 *** this is as far as development has gotten on this project on windows side, the unix side only has the web server service running so it is just a run.py change needed to get a windows python web server service running https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world has an example and will be added later ***
 
-
+###
+Using Eclipse for this project
+- By default I am not putting Eclipse configuartion content into the repository, this will be different for each user base on their environment setups.  
+- To keep the content in the repository to general working files instead of personal settings files only files that are required for execution will be allowed to exist in the master repository.  Each user can branch and store what they want personally in their own repositories but non of those personal settings files will be allowed into the master bransh.
+- Instructions to setup your own Eclipse environment for working on this project
+	- Select "File->New->PyDev Project
+	- I called the Project Name "DFAShop", you can call this what you want to suit your development fancy :)
+	- Do not use the Default Directory under Project Content: instead set the directory to the path you downloaded the Github contents to. I used "C:\Development\Github\DFA"
+	- Next I set Grammer to 3.6 and Interpreter to Python36, note the interpreter name is the one you setup in the setup instructions for Eclipse PyDev above. Also Set grammer to the version of python you installed I installed version 3.6.
+	- You can then Hit Next or Create Project the next page will most likly show a blank page and just have the create project button anyways.
+	- You will now have a .project and a .pydevproject in your development path, these are your own person development setup files, these will not be uploaded to github and shared with anyone.
+	- You will also now have all the project files listed in the Project Heirarchy Tree section in the Eclipse PyDev IDE
+	- You are now ready to start working on the project
 	
+- Next because we setup a virtual environment to work in for this project we will want to add a new interpreter to PyDev for this project and re associate support libraries to only use virtual environment libraries
+	- From top menu select Window->Preferences
+		- In Heirarchy window goto PyDev->Interpreters->Python Interpreter
+		- In top Right click "New" button
+		- Enter in a name for your python interpreter, I choose VirtualEnvPython36 to identify with my Python v3.6 installation
+		- Use "Browse" button to set the path to the projects virtual env path for python.exe, my was at C:\Development\Github\DFA\flask\Scripts\Python.exe
+		- Press "OK" button
+		- A screen will pop up[ for you to select system path associations, I ensured all associations were done, you will notice there is a new one for flask and site-packages and Press "OK" button
+		- Now press "OK" button on the Preferences window.
+	- Now you will want to change your PyDev interpreter to the one you just made, for me it was VirtualDevPython36
+		- In menus for the project open Project->Properties and switch interpreter
+		
+You can now open the winrun.py file and choose Run from menu the application is up and running inside Eclipse Environment
+	- You will see that the application is running at http://127.0.0.1:5000/
+	- You should be able to browse to that location in your brower and see the Flask (MVC) web pages
+	- You can stop, restart the web application using tyhe console window controls for stop restart etc.
+	- Alernatively you can also run the command lines accordingly as well to get the web service up and running.  See Command Prompt instructions later on.
+	
+	
+###
+Using Command Line and other Editors for development
+- Development can be done via normal text editors and command line if a person wished to not use a nice studio development environment.
+- First select you favorite text editor, mine is Programmers Notepade but NotePad++ is also another nice one, it really doesn't matter what editor you use just one you like even Notpade will work.
+	- Things to remember I'd like all python files to have .py extentions or other appropriate extensions by following normal development standards, things can be names whatever you want but try to keep with normal ediquet standards for file naming and programming.
+- Next to run and debug you can use the Windows Command Prompt
+	- Open the Command Prompt, I perfer not to use Admin Command Prompt, by useing the user permission command prompt it allows to enforce portability a little more, I do not want this project to require administrator privileges to run.
+	- Change the to your project directory, for me that is "C:\Development\Github\DFA"
+	- now if you followed all the virtual environment setup proceedures in the setup section above you should be able to just run "flask\Scripts\python winrun.py" and the web service will be up and running.
+- CTRL-C will need to be used to stop the service and the command in previous line will be required to start it up again between file edits while you work on code.
+- debugging is set to true so any errors as the interpreter runs into them will be dumped to the command prompt.  You may want to set the command prompt window size for easier reading of the messages.
+- Thats it your now ready to work on the project using your own text editor and just the command prompt
 
