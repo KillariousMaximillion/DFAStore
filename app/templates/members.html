@@ -1,0 +1,19 @@
+<html>
+	<head>
+		<title>Test</title> 
+		<style>
+			div {text-align:center;}
+		</style>
+	</head>
+	<body>
+		<div>
+			<form action="" method="post" name="AuthForm">
+				{{ form.hidden_tag() }}
+				Who Are you?
+				<br><br>
+				{{ form.members }}
+			</form>
+			<div id='test'></div>
+		</div>
+	</body>
+</html>

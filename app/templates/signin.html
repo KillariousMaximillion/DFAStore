@@ -1,0 +1,52 @@
+<html>
+	<head>
+		<title>Sign In</title> 
+		<!-- script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		< script type="text/javascript">
+			$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+		</script -->
+		<style>
+			div { width:100%; text-align:center; }
+			table { margin: auto; }
+		</style>
+	</head>
+	<body>
+		<div >
+			<form action="{{ url_for('signin') }}" method="post">
+				{{ form.hidden_tag() }}
+				<table>
+					<tr>
+						<td>
+							<b style="color:LightGray;">Sign In</b>
+						</td>
+					</tr>
+					<tr><td><br/></td></tr> <!-- blank row -->
+					<tr>
+						<td>
+							<font color="LightGray">Use your Shivtr Account to Login</font><br/>
+						</td>
+					</tr>
+					<tr><td><br/></td></tr> <!-- blank row -->
+					<tr>
+						<td>
+							<font color="LightGray">Email</font><br/>
+							{{ form.email }}
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<font color="LightGray">Password</font><br/>
+							{{ form.password }}
+						</td>
+					</tr>
+					<tr><td><br/></td></tr> <!-- blank row -->
+					<tr>
+						<td>
+							<input type="submit" value="Login">
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</body>
+</html>
