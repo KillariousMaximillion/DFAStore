@@ -35,6 +35,15 @@ Framwork: Flask (MVC)
 
 Database: PostgreSQL
 
+###
+Setup Instructions
+
+Setting up the python environment
+	- install python latest version
+    - setup alternative selections for different version of python to run see -> https://linuxconfig.org/how-to-change-from-default-to-alternative-python-version-on-debian-linux
+	- type -> python -m venv flask -> this will create a python virtual environment, this allows you to work in a virtual space outside of the systems python environment so you don't dirty up your systems installation of python
+	- type -> pip install -r requirements.txt -> this will install all packages the project uses
+
 ####################################################
 OS: Windows
 
