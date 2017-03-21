@@ -1,8 +1,12 @@
 <html>
 	<head>
 		<title>DFA Store</title> 
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script type="text/javascript">
+			$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+		</script>
 		<style>
-			div {text-align:center;}
+			div { text-align:center; }
 			input {	white-space: normal;
   					-moz-border-radius: 4px;
     				-webkit-border-radius: 4px;
@@ -20,20 +24,35 @@
 							<input style="height:100%; width:100%;color:white;background-color:red;" name="managers_button" type="submit" value="Management">
 						</td> 
 						<td align="center">
-							<b style="color:LightGray;">DFAPs:</b>&nbsp;&nbsp;<font color="LightGray">XXXX</font>
+							<b style="color:LightGray;">DFAPs:</b>&nbsp;&nbsp;<font color="LightGray">{{ dfaps }}</font>
 						</td>
 						<td width="10%">
-							<input style="height:100%; width:100%;color:white;background-color:limegreen;" name="cart_button" type="submit" value="&nbsp;&nbsp;X&nbsp;:&nbsp;Items &nbsp;&nbsp;&nbsp;X&nbsp;:&nbsp;DFAPs">
+							{{ cartbutton }}
 						</td>
 					</tr>
 				</table>
 				<hr>
-				<table width="100%">
-					<tr>
-						<td width="100%" align="center">
-							<font color="LightGray">DFA Store PAGE HERE</font>
-						</td>
-					</tr>
+				<table width='100%' align='center'>
+					<thead>
+						<th/>
+						<th><font color="LightGray">Item Name</font></th>
+						<th><font color="LightGray">Amount</font></th>
+						<th><font color="LightGray">Statistics</font></th>
+						<th><font color="LightGray">Cost DFAPs</font></th>
+						<th/>
+					</thead>
+					<tbody>
+						{% for item in itemstable %}
+							<tr>
+								<td width='200px' align='center'><img src="{{url_for('static', filename='images/placeholderimage.png')}}" /></td>
+								<td width='200px' align='center'><font color="LightGray">{{ item.ItemName }}</font></td>
+								<td width='50px' align='center'><font color="LightGray">{{ item.ItemAmount }}</font></td>
+								<td width='200px' align='center'><font color="LightGray">{{ item.ItemStats }}</font></td>
+								<td width='50px' align='center'><font color="LightGray">{{ item.ItemCost }}</font></td>
+								<td style='width:300px; align:center;'><input style='color:white;background-color:limegreen;' name='add_cart_button' type='submit' value='Add to Cart'></td>
+							</tr>
+						{% endfor %}
+					</tbody>
 				</table>
 			</form>
 		</div>
