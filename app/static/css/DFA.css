@@ -1,0 +1,7 @@
+div { text-align:center; }
+input {	white-space: normal;
+		-moz-border-radius: 4px;
+ 		-webkit-border-radius: 4px;
+ 		border-radius: 4px;
+ 		border: solid 2px #000000;
+	  }
