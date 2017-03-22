@@ -55,10 +55,18 @@ def management():
 def cart():
 	if request.method == 'POST':
 		if 'return_button' in request.form:
+			return redirect(url_for('cart'))
+		elif 'dfashop_button' in request.form:
 			return redirect(url_for('dfastore'))
+		elif 'managers_button' in request.form:
+			return redirect(url_for('management'))
 		
 	form = CartForm()
-	return render_template('cart.html', title='CART', form=form)
+	AvailableDFAPS = 'XXXX'
+	UsedDFAPS = 'XXXX'
+	TotalDFAPS = 'XXXX'
+	ItemsTable = ItemsList.getItems(None)
+	return render_template('cart.html', title='CART', form=form, itemstable=ItemsTable, availabledfaps=AvailableDFAPS, useddfaps=UsedDFAPS, totaldfaps=TotalDFAPS)
 
 @app.route('/addtocart', methods=["GET", "POST"])
 def addtocart():

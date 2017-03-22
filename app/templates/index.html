@@ -1,18 +1,19 @@
 <html>
 	<head>
-		<title>Test</title> 
+		<title>DFA</title> 
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 		<script type="text/javascript">
 			$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 		</script>
+		<link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/DFA.css') }}">
 		<!--  script type="text/javascript" src="{{ url_for('static', filename='scripts/Auth.js') }}"></script -->
-		<style>
-			div {text-align:center;}
-		</style>
 	</head>
 	<body>
 		<div>
-			Welcome to the DFA Store!
+			<h1><font color="LightGray">DFA STORE (WIP)</font></h1>
+		</div>
+		<div>
+			{% block content %}{% endblock %}
 		</div>
 	</body>
 </html>
