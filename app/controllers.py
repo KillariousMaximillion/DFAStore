@@ -60,6 +60,15 @@ class CartForm(FlaskForm):
 class ManagementForm(FlaskForm):
 	placeholder = 0
 	
+class UserManagementForm(FlaskForm):
+	placeholder = 0
+	
+class ShopManagementForm(FlaskForm):
+	placeholder = 0
+	
+class CartManagementForm(FlaskForm):
+	placeholder = 0
+	
 class Item(object):
 	ItemImage = None
 	ItemName = ''

@@ -1,7 +1,23 @@
 {% extends "index.html" %}
 {% block content %}
 	<form action="" method="post" name="CartForm">
-		<font color="LightGray">Welcome to the DFA Store Management Page!</font><br/>
-		<input style='color:white;background-color:limegreen;' name='return_button' type='submit' value='Return to DFAStore'>
+		<table width="100%">
+			<tr>
+				<td width="75%">
+					<input style="height:100%;color:white;background-color:red;" name="user_manage_button" type="submit" value="User Management">
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<input style="height:100%; color:white;background-color:red;" name="shop_manage_button" type="submit" value="Shop Management">
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<input style="height:100%; color:white;background-color:red;" name="cart_manage_button" type="submit" value="Cart Management">
+				</td> 
+				<td width="15%">
+					<td width="15%" align="center">
+					<input style="height:100%; width:100%;color:white;background-color:limegreen;" name="dfashop_button" type="submit" value="DFA Shop">
+				</td>
+				</td>
+			</tr>
+		</table>
+		<hr>
 	</form>
+	{% block management %}{% endblock %}
 {% endblock %}

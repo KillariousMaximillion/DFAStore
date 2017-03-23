@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for, session, Markup, request
 from app import app
-from .controllers import MembersForm, SignInForm, DFAStoreForm, ManagementForm, CartForm, AuthenticateLogin, GetMemberList, ValidToken, ItemsList
+from .controllers import MembersForm, SignInForm, DFAStoreForm, ManagementForm, UserManagementForm, ShopManagementForm, CartManagementForm, CartForm, AuthenticateLogin, GetMemberList, ValidToken, ItemsList
 
 @app.route('/')
 @app.route('/index')
@@ -45,12 +45,63 @@ def dfastore():
 @app.route('/management', methods=["GET", "POST"])
 def management():
 	if request.method == 'POST':
-		if 'return_button' in request.form:
+		if 'dfashop_button' in request.form:
 			return redirect(url_for('dfastore'))
+		elif 'user_manage_button' in request.form:
+			return redirect(url_for('usermanagement'))
+		elif 'shop_manage_button' in request.form:
+			return redirect(url_for('shopmanagement'))
+		elif 'cart_manage_button' in request.form:
+			return redirect(url_for('cartmanagement'))
 		
 	form = ManagementForm()
 	return render_template('management.html', title='Management', form=form)
 			
+@app.route('/usermanagement', methods=["GET", "POST"])
+def usermanagement():
+	if request.method == 'POST':
+		if 'dfashop_button' in request.form:
+			return redirect(url_for('dfastore'))
+		elif 'user_manage_button' in request.form:
+			return redirect(url_for('usermanagement'))
+		elif 'shop_manage_button' in request.form:
+			return redirect(url_for('shopmanagement'))
+		elif 'cart_manage_button' in request.form:
+			return redirect(url_for('cartmanagement'))
+		
+	form = UserManagementForm()
+	return render_template('usermanagement.html', title='User Management', form=form)
+
+@app.route('/shopmanagement', methods=["GET", "POST"])
+def shopmanagement():
+	if request.method == 'POST':
+		if 'dfashop_button' in request.form:
+			return redirect(url_for('dfastore'))
+		elif 'user_manage_button' in request.form:
+			return redirect(url_for('usermanagement'))
+		elif 'shop_manage_button' in request.form:
+			return redirect(url_for('shopmanagement'))
+		elif 'cart_manage_button' in request.form:
+			return redirect(url_for('cartmanagement'))
+		
+	form = ShopManagementForm()
+	return render_template('shopmanagement.html', title='Shop Management', form=form)
+
+@app.route('/cartmanagement', methods=["GET", "POST"])
+def cartmanagement():
+	if request.method == 'POST':
+		if 'dfashop_button' in request.form:
+			return redirect(url_for('dfastore'))
+		elif 'user_manage_button' in request.form:
+			return redirect(url_for('usermanagement'))
+		elif 'shop_manage_button' in request.form:
+			return redirect(url_for('shopmanagement'))
+		elif 'cart_manage_button' in request.form:
+			return redirect(url_for('cartmanagement'))
+		
+	form = CartManagementForm()
+	return render_template('cartmanagement.html', title='Cart Management', form=form)
+
 @app.route('/cart', methods=["GET", "POST"])
 def cart():
 	if request.method == 'POST':

@@ -1,8 +1,6 @@
 {% extends "index.html" %}
 {% block content %}
 	<form action="" method="post" name="CartForm">
-		<!-- font color="LightGray">Welcome to the DFA Store Cart Page!</font><br/>
-		<input style='color:white;background-color:limegreen;' name='return_button' type='submit' value='Return to DFAStore' -->
 		<table width="100%">
 			<tr>
 				<td width="8%" align="center">
@@ -11,14 +9,14 @@
 				<td align="center">
 				</td>
 				<td width="15%" align="center">
-					<input style="height:100%; width:100%;color:white;background-color:red;" name="dfashop_button" type="submit" value="DFA Shop">
+					<input style="height:100%; width:100%;color:white;background-color:limegreen;" name="dfashop_button" type="submit" value="DFA Shop">
 				</td>
 			</tr>
 		</table>
 		<hr>
 		<table width='100%' align='center'>
 			<tr>
-				<td width='10%' align='center'><b><font color="LightGray">DFAPS:</font></b></td>
+				<td width='10%' align='center'><b><font color="LightGray">DFAPs:</font></b></td>
 				<td width='20%' align='center'><font color="LightGray">{{ availabledfaps }} - Available</font></td>
 				<td width='30%' align='center'><font color="LightGray">{{ useddfaps }} - Used (Cart Items)</font></td>
 				<td width='40%' align='center'><font color="LightGray">{{ totaldfaps }} - Total (Available + Cart Items)</font></td>
