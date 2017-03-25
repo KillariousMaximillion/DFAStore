@@ -1,6 +1,41 @@
 {% extends "management.html" %}
 {% block management %}
 	<form action="" method="post" name="ShopManagementForm">
-		<font color="LightGray">Welcome to the DFA Store Shop Management Page!</font><br/>
+		<!-- font color="LightGray">Welcome to the DFA Store Shop Management Page!</font><br/ -->
+		{{ form.hidden_tag() }}
+		<table width='100%' align='center'>
+			<tr>
+				<td width='100%' align='center'>
+					<input style="height:100%; width:150px;color:white;background-color:limegreen;" name="add_new_item_button" type="submit" value="Add New Item">
+				</td>
+			</tr>
+		</table>
+		<br>
+		<table width='100%' align='center'>
+			<thead>
+				<th/>
+				<th><font color="LightGray">Item Name</font></th>
+				<th><font color="LightGray">Amount</font></th>
+				<th><font color="LightGray">Statistics</font></th>
+				<th><font color="LightGray">Cost DFAPs</font></th>
+				<th/>
+			</thead>
+			<tbody>
+				{% for item in itemstable %}
+					<tr>
+						<td width='200px' align='center'><img src="{{url_for('static', filename='images/placeholderimage.png')}}" /></td>
+						<td width='200px' align='center'><font color="LightGray">{{ item.ItemName }}</font></td>
+						<td width='50px' align='center'><font color="LightGray">{{ item.ItemAmount }}</font></td>
+						<td width='200px' align='center'><font color="LightGray">{{ item.ItemStats }}</font></td>
+						<td width='50px' align='center'><font color="LightGray">{{ item.ItemCost }}</font></td>
+						<td style='width:300px; align:center;'>
+							<input style='width:100px;color:white;background-color:limegreen;' name='edit_item_button' type='submit' value='Edit Item'>
+							<br><br>
+							<input style='width:100px;color:white;background-color:red;' name='delete_item_button' type='submit' value='Delete Item'>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 	</form>
 {% endblock %}

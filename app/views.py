@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for, session, Markup, request
 from app import app
-from .controllers import MembersForm, SignInForm, DFAStoreForm, ManagementForm, UserManagementForm, ShopManagementForm, CartManagementForm, CartForm, AuthenticateLogin, GetMemberList, ValidToken, ItemsList
+from .controllers import MembersForm, SignInForm, DFAStoreForm, ManagementForm, UserManagementForm, ShopManagementForm, EditStoreItemForm, CartManagementForm, CartForm, AuthenticateLogin, GetMemberList, ValidToken, ItemsList
 
 @app.route('/')
 @app.route('/index')
@@ -91,7 +91,6 @@ def usermanagement():
 			return redirect(url_for('cartmanagement'))
 		elif 'manual_edit_button' in request.form:
 			form.manualEdit = True
-			TEST = form.dfaps
 			ManualEditDFAPs = Markup('<input name="manual_dfaps" type="text" value="' + str(form.dfaps) + '">')
 		elif 'save_button' in request.form:
 			# save dfaps to database here and repost same page
@@ -101,6 +100,8 @@ def usermanagement():
 
 @app.route('/shopmanagement', methods=["GET", "POST"])
 def shopmanagement():
+	form = ShopManagementForm()
+	
 	if request.method == 'POST':
 		if 'dfashop_button' in request.form:
 			return redirect(url_for('dfastore'))
@@ -110,9 +111,56 @@ def shopmanagement():
 			return redirect(url_for('shopmanagement'))
 		elif 'cart_manage_button' in request.form:
 			return redirect(url_for('cartmanagement'))
+		elif 'add_new_item_button' in request.form:
+			return redirect(url_for('editstoreitem'))
+		elif 'edit_item_button' in request.form:
+			return redirect(url_for('editstoreitem'))
 		
-	form = ShopManagementForm()
-	return render_template('shopmanagement.html', title='Shop Management', form=form)
+	ItemsTable = ItemsList.getItems(None)	
+	return render_template('shopmanagement.html', title='Shop Management', form=form, itemstable=ItemsTable)
+
+@app.route('/editstoreitem', methods=["GET", "POST"])
+def editstoreitem():
+	form = EditStoreItemForm()
+	
+	if not form.memberlist and ValidToken(session['auth_token']):
+		i = 0
+		form.memberlist.append([i, ''])
+		i += 1
+		for each in GetMemberList(session['auth_token']):
+			form.memberlist.append([i, each])
+			i += 1
+	else:
+		redirect(url_for('signin'))
+			
+	ItemList = ItemsList.getItems(None)
+	form.itemlist.clear()
+	i = 0
+	form.itemlist.append([i, ''])
+	i += 1
+	for item in ItemList:
+		form.itemlist.append([i, item.ItemName])
+		i += 1
+		
+	form.imagelist.clear()
+	i = 0
+	form.imagelist.append([i, ''])
+	i += 1
+	form.imagelist.append([i, 'Placeholder Image'])
+		
+	if request.method == 'POST':
+		if 'dfashop_button' in request.form:
+			return redirect(url_for('dfastore'))
+		elif 'user_manage_button' in request.form:
+			return redirect(url_for('usermanagement'))
+		elif 'shop_manage_button' in request.form:
+			return redirect(url_for('shopmanagement'))
+		elif 'cart_manage_button' in request.form:
+			return redirect(url_for('cartmanagement'))
+		elif 'save_button' in request.form:
+			return redirect(url_for('shopmanagement'))
+			
+	return render_template('editstoreitem.html', title='Edit Store Item', form=form)
 
 @app.route('/cartmanagement', methods=["GET", "POST"])
 def cartmanagement():

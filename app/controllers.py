@@ -70,6 +70,15 @@ class UserManagementForm(FlaskForm):
 class ShopManagementForm(FlaskForm):
 	placeholder = 0
 	
+class EditStoreItemForm(FlaskForm):
+	memberlist = []
+	itemlist = []
+	imagelist = []
+	
+	items = SelectField('Items', choices=itemlist)
+	members = SelectField('Members', choices=memberlist)
+	images = SelectField('Images', choices=imagelist)
+	
 class CartManagementForm(FlaskForm):
 	placeholder = 0
 	

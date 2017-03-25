@@ -1,0 +1,86 @@
+{% extends "management.html" %}
+{% block management %}
+	<form action="" method="post" name="EditStoreItemForm">
+		{{ form.hidden_tag() }}
+		<table width='100%' align='center'>
+			<tr>
+				<td style='width:150px;text-align:right;'>
+					<font color="LightGray">Item Name:</font>
+				</td>
+				<td style='width:150px;align:left;'>
+					{{ form.items(**{"style":"width:203px","onchange":"this.form.submit()"}) }}
+				</td>
+				<td></td>
+			</tr>
+			<tr><td><br></td></tr>
+			<tr>
+				<td style='width:150px;text-align:right;'>
+					<font color="LightGray">Amount:</font>
+				</td>
+				<td style='width:150px;align:left;'>
+					<input style="width:50px;"" type="text" name="plus_dfaps">
+				</td>
+				<td></td>
+			</tr>
+			<tr><td><br></td></tr>
+			<tr>
+				<td style='width:150px;text-align:right;'>
+					<font color="LightGray">Cost:</font>
+				</td>
+				<td style='width:150px;align:left;'>
+					<input style="width:50px;"" type="text" name="plus_dfaps">&nbsp;&nbsp;<font color="LightGray">DFAPs</font>
+				</td>
+				<td></td>
+			</tr>
+			<tr><td><br></td></tr>
+			<tr>
+				<td style='width:150px;text-align:right;'>
+					<font color="LightGray">Donated By:</font>
+				</td>
+				<td style='width:150px;align:left;'>
+					{{ form.members(**{"style":"width:203px","onchange":"this.form.submit()"}) }}
+				</td>
+				<td></td>
+			</tr>
+			<tr><td><br></td></tr>
+			<tr>
+				<td style='vertical-align:top;width:150px;text-align:right;'>
+					<font color="LightGray">Item Stats/Description:</font>
+				</td>
+				<td style='width:150px;align:left;'>
+					<textarea rows='10' cols='26'></textarea>
+				</td>
+				<td></td>
+			</tr>
+			<tr><td><br></td></tr>
+			<tr>
+				<td style='vertical-align:top;width:150px;text-align:right;'>
+					<font color="LightGray">Image:</font>
+				</td>
+				<td style='vertical-align:top;width:150px;align:left;'>
+					{{ form.images(**{"style":"width:203px","onchange":"this.form.submit()"}) }}
+				</td>
+				<td style='align:left;'>
+					<table width='100%' align='left'>
+						<tr>
+							<td style='width:8%;align:left;'>
+								<img src="{{url_for('static', filename='images/placeholderimage.png')}}" />
+							</td>
+							<td style='vertical-align:top;align:left;'>
+								<input style="height:100%; width:100px;color:white;background-color:limegreen;" name="upload_image_button" type="submit" value="Upload New Image">
+							</td>
+						</tr>
+					</table>
+				</td>			
+			</tr>	
+		</table>
+		<table width='100%' align='center'>
+			<tr><td><br><br><br></td></tr>
+			<tr>
+				<td width='100%' align='center'>
+					<input style="height:100%; width:50px;color:white;background-color:limegreen;" name="save_button" type="submit" value="Save">
+				</td>
+			</tr>
+		</table>
+	</form>
+{% endblock %}
