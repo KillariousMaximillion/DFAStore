@@ -61,7 +61,11 @@ class ManagementForm(FlaskForm):
 	placeholder = 0
 	
 class UserManagementForm(FlaskForm):
-	placeholder = 0
+	fields = []
+	dfaps = 0
+	manualEdit = False
+
+	members = SelectField('Members', choices=fields)
 	
 class ShopManagementForm(FlaskForm):
 	placeholder = 0

@@ -59,6 +59,27 @@ def management():
 			
 @app.route('/usermanagement', methods=["GET", "POST"])
 def usermanagement():
+	form = UserManagementForm()
+	ManualEditDFAPs = ''
+	
+	if not form.fields and ValidToken(session['auth_token']):
+		i = 0
+		form.fields.append([i, ''])
+		i += 1
+		for each in GetMemberList(session['auth_token']):
+			form.fields.append([i, each])
+			i += 1
+	else:
+		redirect(url_for('signin'))
+		
+	if request.form.get('members') and (request.form.get('members')).isdigit():
+		if form.fields[int(request.form.get('members'))][1] == 'Mystic1':
+			form.dfaps = 100
+		elif form.fields[int(request.form.get('members'))][1] == 'cambriolage':
+			form.dfaps = 200
+	
+	DFAPS = form.dfaps
+	
 	if request.method == 'POST':
 		if 'dfashop_button' in request.form:
 			return redirect(url_for('dfastore'))
@@ -68,9 +89,15 @@ def usermanagement():
 			return redirect(url_for('shopmanagement'))
 		elif 'cart_manage_button' in request.form:
 			return redirect(url_for('cartmanagement'))
-		
-	form = UserManagementForm()
-	return render_template('usermanagement.html', title='User Management', form=form)
+		elif 'manual_edit_button' in request.form:
+			form.manualEdit = True
+			TEST = form.dfaps
+			ManualEditDFAPs = Markup('<input name="manual_dfaps" type="text" value="' + str(form.dfaps) + '">')
+		elif 'save_button' in request.form:
+			# save dfaps to database here and repost same page
+			form.manualEdit = False
+			
+	return render_template('usermanagement.html', title='User Management', form=form, dfaps=DFAPS, manualeditdfaps=ManualEditDFAPs)
 
 @app.route('/shopmanagement', methods=["GET", "POST"])
 def shopmanagement():

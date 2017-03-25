@@ -1,6 +1,30 @@
 {% extends "management.html" %}
 {% block management %}
 	<form action="" method="post" name="UserManagementForm">
-		<font color="LightGray">Welcome to the DFA Store User Management Page!</font><br/>
+		{{ form.hidden_tag() }}
+		<!-- font color="LightGray">Welcome to the DFA Store User Management Page!</font><br/ -->
+		<table width='100%' align='center'>
+			<tr>
+				<td width='100%' align='left'>
+					<font color="LightGray">Select member to edit:</font>&nbsp;&nbsp;{{ form.members(**{"onchange":"this.form.submit()"}) }}
+				</td>
+			</tr>
+			<tr><td><br></td></tr>
+			<tr>
+				<td width='100%' align='left'>
+					{% if form.manualEdit == True %}
+						<font color="LightGray">DFAPs:</font>&nbsp;&nbsp;{{ manualeditdfaps }}
+					{% else %}
+						<font color="LightGray">DFAPs:</font>&nbsp;&nbsp;<font color="LightGray"><b>{{ form.dfaps }}</b></font>&nbsp;&nbsp;+&nbsp;&nbsp;<input style="width:50px;"" type="text" name="plus_dfaps">&nbsp;&nbsp;<img src="{{url_for('static', filename='images/GreenLeftArrowSmall.png')}}" />&nbsp;&nbsp;<font color="LightGray">Adds to Value on Save.  Or you can</font>&nbsp;&nbsp;<img src="{{url_for('static', filename='images/RedRightArrowSmall.png')}}" />&nbsp;&nbsp;<input style="height:100%; width:100px;color:white;background-color:red;" name="manual_edit_button" type="submit" value="Manual Edit">
+					{% endif %}
+				</td>
+			</tr>
+			<tr><td><br><br><br></td></tr>
+			<tr>
+				<td width='100%' align='center'>
+					<input style="height:100%; width:50px;color:white;background-color:limegreen;" name="save_button" type="submit" value="Save">
+				</td>
+			</tr>
+		</table>
 	</form>
 {% endblock %}
