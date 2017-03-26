@@ -1,7 +1,16 @@
 from flask import render_template, redirect, url_for, session, Markup, request
+from datetime import timedelta
 from app import app
 from .controllers import MembersForm, SignInForm, DFAStoreForm, ManagementForm, UserManagementForm, ShopManagementForm, EditStoreItemForm, CartManagementForm, CartForm, AuthenticateLogin, GetMemberList, ValidToken, ItemsList
 
+######
+# Base URL Route/Handler Code
+# Checks to ensure the session value for the auth_token exists 
+#	if true - Validate the auth_token with Shivtr.com website to ensure it is still an active token
+#		if true - redirect to the dfastore route
+#		if false - redirect to signin route to obtain a new auth_token
+#	if false - redirect to signin route to obtain a new auth_token
+######
 @app.route('/')
 @app.route('/index')
 def index():
@@ -12,19 +21,27 @@ def index():
 			return redirect(url_for('signin'))
 	else:
 		return redirect(url_for('signin'))
-	
-	return render_template('index.html', title='DFA Store')
 
+######
+# Sign In Route/Handler Code
+# Displays the SignInForm defined in the controllers file
+# On Submit the form is validated and if validation is good
+#	Generates an Authentication Token from the Shivtr site using Shivtr API
+#   if token is retrieved a session token is stored and the page redirects to the dfastore route
+######
 @app.route('/signin', methods=["GET", "POST"])
 def signin():
 	form = SignInForm()
 	if form.validate_on_submit():
 		AuthToken = AuthenticateLogin(form.email.data, form.password.data)
 		if AuthToken:
+			session.permanent = True
+			session.permanent_session_lifetime = timedelta(days=365)
 			session['auth_token'] = AuthToken
 			return redirect(url_for('dfastore'))
 		
 	return render_template('signin.html', title='Sign In', form=form)
+
 
 @app.route('/dfastore', methods=["GET", "POST"])
 def dfastore():
