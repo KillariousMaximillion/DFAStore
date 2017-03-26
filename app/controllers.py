@@ -80,7 +80,13 @@ class EditStoreItemForm(FlaskForm):
 	images = SelectField('Images', choices=imagelist)
 	
 class CartManagementForm(FlaskForm):
-	placeholder = 0
+	activecarts = 0
+	memberlist =[]
+	itemlist = []
+	itemsincart = 0
+	
+	members = SelectField('Members', choices=memberlist)
+	items = SelectField('Items', choices=itemlist)
 	
 class Item(object):
 	ItemImage = None

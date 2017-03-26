@@ -12,6 +12,7 @@ def index():
 			return redirect(url_for('signin'))
 	else:
 		return redirect(url_for('signin'))
+	
 	return render_template('index.html', title='DFA Store')
 
 @app.route('/signin', methods=["GET", "POST"])
@@ -40,6 +41,7 @@ def dfastore():
 	ItemsTable = ItemsList.getItems(None)
 	CartButtonText = '&nbsp;&nbsp;X&nbsp;:&nbsp;Items &nbsp;&nbsp;&nbsp;X&nbsp;:&nbsp;DFAPs'
 	CartButton = Markup('<input style="height:100%; width:100%;color:white;background-color:limegreen;" name="cart_button" type="submit" value="' + CartButtonText + '">')
+	
 	return render_template('dfastore.html', title='DFA Store', form=form, dfaps=DFAPS, cartbutton=CartButton, itemstable=ItemsTable)
 
 @app.route('/management', methods=["GET", "POST"])
@@ -55,6 +57,7 @@ def management():
 			return redirect(url_for('cartmanagement'))
 		
 	form = ManagementForm()
+	
 	return render_template('management.html', title='Management', form=form)
 			
 @app.route('/usermanagement', methods=["GET", "POST"])
@@ -163,7 +166,23 @@ def editstoreitem():
 	return render_template('editstoreitem.html', title='Edit Store Item', form=form)
 
 @app.route('/cartmanagement', methods=["GET", "POST"])
-def cartmanagement():
+def cartmanagement():	
+	form = CartManagementForm()
+	ItemsTable = []
+
+	form.memberlist.clear()
+	form.memberlist.append([0, ''])
+	form.memberlist.append([1, 'Mystic1'])
+	form.memberlist.append([2, 'cambriolage'])
+	
+	if request.form.get('members') and (request.form.get('members')).isdigit():
+		if form.memberlist[int(request.form.get('members'))][1] == 'Mystic1':
+			ItemsTable = ItemsList.getItems(None)
+			form.itemsincart = len(ItemsTable)
+		elif form.memberlist[int(request.form.get('members'))][1] == 'cambriolage':
+			ItemsTable = ItemsList.getItems(None)
+			form.itemsincart = len(ItemsTable)
+		
 	if request.method == 'POST':
 		if 'dfashop_button' in request.form:
 			return redirect(url_for('dfastore'))
@@ -174,8 +193,14 @@ def cartmanagement():
 		elif 'cart_manage_button' in request.form:
 			return redirect(url_for('cartmanagement'))
 		
-	form = CartManagementForm()
-	return render_template('cartmanagement.html', title='Cart Management', form=form)
+	#ItemsTable = ItemsList.getItems(None)
+	
+	AvailableDFAPS = 'XXXX'
+	UsedDFAPS = 'XXXX'
+	TotalDFAPS = 'XXXX'
+	form.activecarts = 2
+		
+	return render_template('cartmanagement.html', title='Cart Management', form=form, itemstable=ItemsTable, availabledfaps=AvailableDFAPS, useddfaps=UsedDFAPS, totaldfaps=TotalDFAPS)
 
 @app.route('/cart', methods=["GET", "POST"])
 def cart():
@@ -192,6 +217,7 @@ def cart():
 	UsedDFAPS = 'XXXX'
 	TotalDFAPS = 'XXXX'
 	ItemsTable = ItemsList.getItems(None)
+	
 	return render_template('cart.html', title='CART', form=form, itemstable=ItemsTable, availabledfaps=AvailableDFAPS, useddfaps=UsedDFAPS, totaldfaps=TotalDFAPS)
 
 @app.route('/addtocart', methods=["GET", "POST"])
