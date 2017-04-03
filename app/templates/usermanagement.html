@@ -11,10 +11,10 @@
 			<tr><td><br></td></tr>
 			<tr>
 				<td width='100%' align='left'>
-					{% if form.manualEdit == True %}
+					{% if form.manualedit == True %}
 						<font color="LightGray">DFAPs:</font>&nbsp;&nbsp;{{ manualeditdfaps }}
 					{% else %}
-						<font color="LightGray">DFAPs:</font>&nbsp;&nbsp;<font color="LightGray"><b>{{ form.dfaps }}</b></font>&nbsp;&nbsp;<font color="LightGray">+</font>&nbsp;&nbsp;<input style="width:50px;"" type="text" name="plus_dfaps">&nbsp;&nbsp;<img src="{{url_for('static', filename='images/GreenLeftArrowSmall.png')}}" />&nbsp;&nbsp;<font color="LightGray">Adds to Value on Save.  Or you can</font>&nbsp;&nbsp;<img src="{{url_for('static', filename='images/RedRightArrowSmall.png')}}" />&nbsp;&nbsp;<input style="height:100%; width:100px;color:white;background-color:red;" name="manual_edit_button" type="submit" value="Manual Edit">
+						<font color="LightGray">DFAPs:</font>&nbsp;&nbsp;<font color="LightGray"><b>{{ form.dfaps }}</b></font>&nbsp;&nbsp;<font color="LightGray">+</font>&nbsp;&nbsp;<input style="width:100px;"" type="number" step="any" name="plus_dfaps">&nbsp;&nbsp;<img src="{{url_for('static', filename='images/GreenLeftArrowSmall.png')}}" />&nbsp;&nbsp;<font color="LightGray">Adds to Value on Save.  Or you can</font>&nbsp;&nbsp;<img src="{{url_for('static', filename='images/RedRightArrowSmall.png')}}" />&nbsp;&nbsp;<input style="height:100%; width:100px;color:white;background-color:red;" name="manual_edit_button" type="submit" value="Manual Edit">
 					{% endif %}
 				</td>
 			</tr>
@@ -25,5 +25,6 @@
 				</td>
 			</tr>
 		</table>
+		{{ data }}
 	</form>
 {% endblock %}

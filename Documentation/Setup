@@ -250,6 +250,26 @@ Setting up Python virtual Environment
 - type -> flask\Scripts\activate.bat -> this will set the shell to the flask virtual environment, without entering the virtual shell it will try to apply all changes to the system which requires administrator access
 - type -> pip install -r requirements.txt -> this will install all packages the project uses
 
+Setting up postgresql databaser for the DFAStore project
+Using pgAdmin 4
+	- access your local postgres server
+	- right click on Login/Group Roles
+	- click Create->Login/Group Role
+	- In General Add
+		- Name: testusr
+	- In Definitions Add
+		- Password: test
+	- In Privileges Add
+		- Turn Can Login On
+	- right click on databases
+	- click Create->Database
+	- In General Add
+		- Database Name: dfastore
+		- Owner: postgres
+	- In Security Add Privilages
+		- select testusr
+		- and give testusr all privileges
+		
 *** this is as far as development has gotten on this project on windows side, the unix side only has the web server service running so it is just a run.py change needed to get a windows python web server service running https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world has an example and will be added later ***
 
 ###

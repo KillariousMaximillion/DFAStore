@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, session, Markup, request
 from datetime import timedelta
 from app import app
-from .controllers import MembersForm, SignInForm, DFAStoreForm, ManagementForm, UserManagementForm, ShopManagementForm, EditStoreItemForm, CartManagementForm, CartForm, AuthenticateLogin, GetMemberList, ValidToken, ItemsList
+from .controllers import SignInForm, DFAStoreForm, ManagementForm, UserManagementForm, ShopManagementForm, EditStoreItemForm, CartManagementForm, CartForm, AuthenticateLogin, GetMemberList, ValidToken, ItemsList
 
 ######
 # Base URL Route/Handler Code
@@ -21,7 +21,7 @@ def index():
 			return redirect(url_for('signin'))
 	else:
 		return redirect(url_for('signin'))
-
+	
 ######
 # Sign In Route/Handler Code
 # Displays the SignInForm defined in the controllers file
@@ -41,8 +41,13 @@ def signin():
 			return redirect(url_for('dfastore'))
 		
 	return render_template('signin.html', title='Sign In', form=form)
-
-
+	
+######
+# DFA Store Route/Hander Code
+# Displays the list of items in the DFA Store. Allows the user to see quick
+# 	info about his Cart. Also if the user is a manager allows them to enter
+#	the management section of the application.
+######
 @app.route('/dfastore', methods=["GET", "POST"])
 def dfastore():
 	if request.method == 'POST':
@@ -61,6 +66,9 @@ def dfastore():
 	
 	return render_template('dfastore.html', title='DFA Store', form=form, dfaps=DFAPS, cartbutton=CartButton, itemstable=ItemsTable)
 
+######
+# 
+######
 @app.route('/management', methods=["GET", "POST"])
 def management():
 	if request.method == 'POST':
@@ -77,29 +85,17 @@ def management():
 	
 	return render_template('management.html', title='Management', form=form)
 			
+######
+#
+######
 @app.route('/usermanagement', methods=["GET", "POST"])
 def usermanagement():
 	form = UserManagementForm()
+	form.UpdateMembersList(session['auth_token'])
+	form.GetMembersList()
+
 	ManualEditDFAPs = ''
-	
-	if not form.fields and ValidToken(session['auth_token']):
-		i = 0
-		form.fields.append([i, ''])
-		i += 1
-		for each in GetMemberList(session['auth_token']):
-			form.fields.append([i, each])
-			i += 1
-	else:
-		redirect(url_for('signin'))
 		
-	if request.form.get('members') and (request.form.get('members')).isdigit():
-		if form.fields[int(request.form.get('members'))][1] == 'Mystic1':
-			form.dfaps = 100
-		elif form.fields[int(request.form.get('members'))][1] == 'cambriolage':
-			form.dfaps = 200
-	
-	DFAPS = form.dfaps
-	
 	if request.method == 'POST':
 		if 'dfashop_button' in request.form:
 			return redirect(url_for('dfastore'))
@@ -110,13 +106,26 @@ def usermanagement():
 		elif 'cart_manage_button' in request.form:
 			return redirect(url_for('cartmanagement'))
 		elif 'manual_edit_button' in request.form:
-			form.manualEdit = True
-			ManualEditDFAPs = Markup('<input name="manual_dfaps" type="text" value="' + str(form.dfaps) + '">')
+			form.manualedit = True
+			ManualEditDFAPs = Markup('<input name="manual_dfaps" type="number" step="any" value="' + str(form.dfaps) + '">')
 		elif 'save_button' in request.form:
-			# save dfaps to database here and repost same page
-			form.manualEdit = False
+			if request.form.get('manual_dfaps'):
+				form.SaveMemberData(form.memberlist[int(request.form.get('members'))][1], request.form.get('manual_dfaps'), False)
+			else:
+				form.SaveMemberData(form.memberlist[int(request.form.get('members'))][1], request.form.get('plus_dfaps'), True)
+			form.manualedit = False
 			
-	return render_template('usermanagement.html', title='User Management', form=form, dfaps=DFAPS, manualeditdfaps=ManualEditDFAPs)
+	# Update form data only if member was selected else reset form to defaults		
+	if request.form.get('members'):
+		form.UpdateFormData(form.memberlist[int(request.form.get('members'))][1])
+	else:
+		form.dfaps = 0
+		
+	# Force the form to only display 4 decimal precision when not in manual edit mode
+	if not form.manualedit and form.dfaps:
+		form.dfaps = round(form.dfaps,4)		
+			
+	return render_template('usermanagement.html', title='User Management', form=form, manualeditdfaps=ManualEditDFAPs)
 
 @app.route('/shopmanagement', methods=["GET", "POST"])
 def shopmanagement():
@@ -242,17 +251,3 @@ def addtocart():
 	# items added to cart for the user
 	# update store data 
 	return redirect(url_for('dfastore'))
-			
-### The members route is a test route
-@app.route('/members')
-def members():
-	form = MembersForm()
-	if ValidToken(session['auth_token']):
-		i = 0
-		for each in GetMemberList(session['auth_token']):
-			form.fields.append([i, each])
-			i += 1
-	else:
-		redirect(url_for('signin'))
-		
-	return render_template('members.html', title='Members', form=form)
